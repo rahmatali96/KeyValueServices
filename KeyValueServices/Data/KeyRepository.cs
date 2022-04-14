@@ -38,7 +38,7 @@ namespace KeyValueServices.Data
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<Key> UpadeKey(Key keymodal)
+        public async Task<Key> UpdateKey(Key keymodal)
         {
             var exist = _context.Keys.Find(keymodal.key);
             _context.Keys.Update(exist);

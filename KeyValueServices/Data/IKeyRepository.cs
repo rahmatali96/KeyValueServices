@@ -12,7 +12,7 @@ namespace KeyValueServices.Data
         // Camps
         Task<Key[]> GetAllKeysAsync();
         Task<Key> GetKeyAsync(string key);
-        Task<Key> UpadeKey(Key keymodal);
+        Task<Key> UpdateKey(Key keymodal);
 
     }
 }

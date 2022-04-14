@@ -80,8 +80,8 @@ namespace KeyValueServices.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
             }
         }
-        [HttpPatch("{key}")]
-        [Route("api/[controller]/key")]
+        [HttpPatch]
+        [Route("api/[controller]/key/value")]
         public async Task<ActionResult<Key[]>> Patch(string key, Key keymodal)
         {
             try
@@ -101,5 +101,6 @@ namespace KeyValueServices.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
             }
         }
+
     }
 }
