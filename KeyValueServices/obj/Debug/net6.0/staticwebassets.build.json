@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "JAbLfNJrmCdN4MNkyMBaJGPAC9h+QYyYR8QYKhRyYQk=",
+  "Source": "KeyValueServices",
+  "BasePath": "_content/KeyValueServices",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
