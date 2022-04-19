@@ -5,14 +5,12 @@ namespace KeyValueServices.Data
     public interface IKeyRepository
     {
         // General 
-        void Add<T>(T entity) where T : class;
-        void Delete<T>(T entity) where T : class;
+        void Add<K>(K entity) where K : class;
+        void Delete<K>(K entity) where K : class;
         Task<bool> SaveChangesAsync();
 
         // Camps
         Task<Key[]> GetAllKeysAsync();
         Task<Key> GetKeyAsync(string key);
-        Task<Key> UpdateKey(Key keymodal);
-
     }
 }

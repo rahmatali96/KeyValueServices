@@ -10,5 +10,11 @@ namespace KeyValueServices.Data
             
         }
         public DbSet<Key> Keys { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Key>().HasData(
+                new Key { key = "temp_dev0", value = "87" }
+                );
+        }
     }
 }

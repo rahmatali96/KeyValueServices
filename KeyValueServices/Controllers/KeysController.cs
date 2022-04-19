@@ -1,6 +1,8 @@
-﻿using KeyValueServices.Data;
+﻿using AutoMapper;
+using KeyValueServices.Data;
 using KeyValueServices.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KeyValueServices.Controllers
@@ -34,7 +36,11 @@ namespace KeyValueServices.Controllers
             try
             {
                 var result = await _repository.GetKeyAsync(key);
-                if(result==null) return NotFound();
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                else
                 return Ok(result);
             }
             catch (Exception)
@@ -50,11 +56,12 @@ namespace KeyValueServices.Controllers
                 var exist = await _repository.GetKeyAsync(key.key);
                 if (exist != null)
                 {
-                    return Conflict("Key are allready exist");
+                    return Conflict(key);
                 }
-                _repository.Add(key);
-                await _repository.SaveChangesAsync();
-                return Ok("Added key");
+                else
+                    _repository.Add(key);
+                    await _repository.SaveChangesAsync();
+                    return Ok(key); 
             }
             catch (Exception)
             {
@@ -67,34 +74,35 @@ namespace KeyValueServices.Controllers
             try
             {
                 var oldkey = await _repository.GetKeyAsync(key);
-                if (oldkey == null) return NotFound();
-                _repository.Delete(oldkey);
-                if (await _repository.SaveChangesAsync())
+                if (oldkey == null)
                 {
-                    return Ok();
+                    return NotFound();
                 }
-                return Ok();
+                else
+                    _repository.Delete(oldkey);
+                    await _repository.SaveChangesAsync();
+                    return Ok(oldkey);
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
             }
         }
-        [HttpPatch]
-        [Route("api/[controller]/key/value")]
-        public async Task<ActionResult<Key[]>> Patch(string key, Key keymodal)
+        [HttpPatch("{key}/{value}")]
+        public async Task<ActionResult<Key[]>> Patch(string key,string value)
         {
             try
             {
                 var existKey = await _repository.GetKeyAsync(key);
-                if (existKey != null)
+                if(existKey == null)
                 {
-                    existKey.key = keymodal.key;
-                    _repository.GetKeyAsync(key);
-                    return Ok();
+                    return NotFound();
                 }
                 else
-                    return NotFound();
+                    existKey.value=value;
+                    await _repository.SaveChangesAsync();
+                    return Ok(existKey);
+                     
             }
             catch (Exception)
             {
